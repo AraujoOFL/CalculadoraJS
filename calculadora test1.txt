@@ -1,0 +1,72 @@
+var num1 = "";
+var operador;
+var num2 = "";
+var whole_operation = "";
+
+var isSecondNumber = false;
+
+var resultado = document.getElementById("resultado");
+
+var botoes = document.getElementsByClassName("button");
+
+function botaoPressionado(evento) {
+    id = evento.currentTarget.id
+
+    if (id == "C") {
+        num1 = ""
+        num2 = ""
+        whole_operation = ""
+    }
+
+    if (id != "=" && id != "C") {
+        whole_operation += id;
+    }
+
+
+    resultado.textContent = whole_operation;
+
+    if (!isNaN(id) || id == ".") {
+        if (isSecondNumber) {
+            num2 += id;
+            //resultado.textContent = num2;
+        } else {
+            num1 += id;
+            //resultado.textContent = num1;
+        }
+    } else if (id == "=") {
+        var result = 0;
+        number1_int = Number(num1);
+        number2_int = Number(num2);
+        switch (operador) {
+            case "+":
+                result = (number1_int + number2_int);
+                break;
+            case "-":
+                result = (number1_int - number2_int);
+                break;
+            case "/":
+                result = (number1_int / number2_int);
+                break;
+            case "*":
+                result = (number1_int * number2_int);
+                break;
+            default:
+                console.log("ERRO");
+                break;
+        }
+        resultado.textContent = result;
+        console.log(result);
+        num1 = result.toString();
+        num2 = "";
+        isSecondNumber = false;
+        whole_operation = num1;
+        operador = null;
+    } else {
+        isSecondNumber = true;
+        operador = id;
+    }
+}
+
+for (var i = 0; i < botoes.length; i++) {
+    botoes[i].addEventListener('click', botaoPressionado);
+}
